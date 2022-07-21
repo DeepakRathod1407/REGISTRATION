@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script>
+        $(document).ready(function () {
+            Isd();
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container m-auto col-lg-5 border-1 bg-success pb-5">
+        <h3 class="text-center mt-3 mb-1">Registration Form</h3>
+        <h5 class="text-center">complete the form and press the submit button below</h5>
+        <form name="registration" class="form-control m-auto ps-5 pe-5" onsubmit="return Submit()" method="post" action="registration.php">
+               <input type="text" class="form-control mb-2" id="FName" name="name" placeholder="Full Name *"> 
+                <input type="text" class="form-control mb-2" id="fathersname" name="fathername"
+                    placeholder="Father's Name *">
+                <input type="text" class="form-control mb-2" id="mail" name="email"
+                    placeholder="Enter your Email Address *">
+                <input type="text" class="form-control" name="DOB" ID="Dob" onfocus="(this.type='date')"
+                    placeholder="Date of Birth *">
+                    <label class="h6 mt-3">Country</label>
+                <select id="Country" name="country" onchange="Isd()" class="form-select mb-3" aria-label=".form-select-lg example">
+                    <option >Select Country</option>
+                    <option value="India">India</option>
+                    <option value="USA">United States</option>
+                    <option selected value="United Kingdom">United Kingdom</option>
+                </select>
+                <div class="d-flex">
+                    <input style="width:30%" class="ps-3 me-3" type="text" id="contact" name="contact">
+                    <input type="text" class="form-control" name="PhoneNumber" placeholder="Phone Number *" id="T1"
+                        pattern="[0-9]{10}" maxlength="10">
+                </div>
+                <label class="h6 mt-3"> What is your Gender?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                    <label class="form-check-label" type="radio" >
+                        Male
+                    </label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="gender" id="Female" checked value="female">
+                    <label class="form-check-label">
+                        Female
+                    </label>
+                </div>
+                <label class="h6 mt-3">Enter ID card number in given format</label>
+                <div class="d-flex mb-3">
+                    <input name="num1" class="form-control me-3" type="text" placeholder="#####" id="F1" pattern="[0-9]{5}"
+                        maxlength="5" style="width:40%">
+                    <input name="num2" class="form-control me-3" type="text" placeholder="#######" id="F2" pattern="[0-9]{7}"
+                        maxlength="7"style="width:60%">
+                    <input name="num3" class="form-control" type="text" placeholder="#" id="F3" pattern="[0-9]{1}"
+                        maxlength="1"style="width:20%">
+                </div>
+                <input type="file" name="file" id="File"><br>
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+
+
+        </form>
+
+
+    </div>
+    <script>
+        function Submit() {
+
+            var Errormessage = "";
+
+            var a = document.forms["registration"]["FName"].value;
+            if (a.trim() == "") {
+                Errormessage = Errormessage + "Please enter your name to proceed ahead\n";
+
+            }
+            else if (RegN(a) == false) {
+                Errormessage = Errormessage + "Please enter your valid name use only alphabets\n";
+            }
+
+
+
+            var b = document.forms["registration"]["fathersname"].value;
+            if (b.trim() == "") {
+                Errormessage = Errormessage + "Please enter father's name to proceed ahead\n";
+
+            }
+            else if (RegN(b) == false) {
+                Errormessage = Errormessage + "Please enter your valid name use only alphabets\n";
+            }
+
+
+            var c = document.forms["registration"]["mail"].value;
+            if (c == "") {
+                Errormessage = Errormessage + "Please enter Email Id to proceed ahead\n";
+            }
+            else if (RegE(c) == false) {
+                Errormessage = Errormessage + "Please enter your valid email address\n";
+            }
+
+
+
+            var d = document.forms["registration"]["DOB"].value;
+            if (d == "") {
+                Errormessage = Errormessage + "Please enter Date Of Birth to proceed ahead\n";
+            }
+
+            var e = document.forms["registration"]["T1"].value;
+            if (e == "") {
+                Errormessage = Errormessage + "Please enter Phone Number to proceed ahead\n";
+            }
+            else if (isNaN(e)) {
+                document.getElementById("T1").innerHTML = "Please fill numbers only\n";
+                return false;
+            }
+
+
+            var k = document.forms["registration"]["gender"].value;
+
+            var h = document.forms["registration"]["F1", "F2", "F3"].value;
+            var h1 = document.getElementById("F1").value;
+            var h2 = document.getElementById("F2").value;
+            var h3 = document.getElementById("F3").value;
+            if (h == "") {
+                Errormessage = Errormessage + "Please enter ID Number to proceed ahead\n";
+            }
+
+            var i = document.getElementById("Country").value;
+
+            var j = document.getElementById("contact").value;
+
+
+            if (Errormessage != "") {
+                alert(Errormessage);
+                return false;
+            }
+
+            else {
+
+                var idcard = h1 + " " + h2 + " " + h3;
+
+                var mailcontent = "Your Name: " + a + "%0D%0AFather'name: " + b + "%0D%0AEmail Address: " + c + "%0D%0ADate of birth: " + d + "%0D%0ACountry: " + i + "%0D%0AContact Number: " + j + "%20" + e + "%0D%0AGender: " + k + "%0D%0AIDcard: " + idcard;
+
+                location.href = "mailto: " + c + "?cc=dipak@siliconinterfaces.com&subject=Registration Form%20&body=" + mailcontent + "%0D%0AThanks," + "%0D%0ATeam.";
+
+                return true;
+            }
+        }
+
+
+
+
+        function Isd() {
+            document.getElementById("contact").value = "";
+            let y = document.getElementById("Country").value;
+            if (y == "India") {
+                document.getElementById("contact").value = "+91";
+            }
+            else if (y == "United States") {
+                document.getElementById("contact").value = "+1";
+            }
+            else if (y == "United Kingdom") {
+                document.getElementById("contact").value = "+44";
+            }
+            else if (y == "USA") {
+                document.getElementById("contact").value = "+1";
+            }
+            else if (y == "United Arab Emirates") {
+                document.getElementById("contact").value = "+971";
+            }
+            else {
+                alert("please select country");
+            }
+
+        }
+
+        function RegE(mail) {
+            var r = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!r.test(mail)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+        function RegN(FName) {
+            //var regex =/^[A-Z'a-z]+$/;
+            var regex = /^[A-Za-z'\s]*$/;
+            if (!regex.test(FName, fathersname)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
